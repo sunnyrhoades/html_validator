@@ -1,5 +1,6 @@
 #!/bin/python3
 
+from pythonds.basic import Stack
 
 def validate_html(html):
     '''
@@ -10,6 +11,27 @@ def validate_html(html):
     >>> validate_html('<strong>example')
     False
     '''
+    tags  = _extract_tags(html)
+    #print(tags)
+    valid_html = []
+    s = Stack()
+    for tag in tags:
+        if tag[0] != "/":
+            if tag not in valid_html:
+                valid_html.append(tag)
+            s.push(tag)
+        else: 
+            if s.isEmpty():
+                return
+            last_tag = s.pop()
+            if ("/" + last_tag) == tag:
+                continue
+            else:
+                return
+    if s.isEmpty():
+        return True
+    else:
+        return False
 
     # HINT:
     # use the _extract_tags function below to generate a list of html tags without any extra text;
@@ -29,3 +51,14 @@ def _extract_tags(html):
     >>> _extract_tags('Python <strong>rocks</strong>!')
     ['<strong>', '</strong>']
     '''
+    tags = []
+
+    for i in range(len(html)):
+        if html[i] == "<":
+            tag = ""
+            i += 1
+            while (html[i] != ">" and html[i] != " ") and i <= len(html):
+                tag += html[i]
+                i += 1
+            tags.append(tag)
+    return tags
