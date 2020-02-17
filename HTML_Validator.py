@@ -9,8 +9,20 @@ def validate_html(html):
     >>> validate_html('<strong>example')
     False
     '''
-    tags  = _extract_tags(html)
+    #tags  = _extract_tags(html)
     #print(tags)
+
+    tags = []
+
+    for i in range(len(html)):
+        if html[i] == "<":
+            tag = ""
+            i += 1
+            while (html[i] != ">" and html[i] != " ") and i <= len(html):
+                tag += html[i]
+                i += 1
+            tags.append(tag)
+
     valid_html = []
     s = []
     for tag in tags:
