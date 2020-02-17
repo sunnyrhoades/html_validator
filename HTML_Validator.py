@@ -58,5 +58,5 @@ def _extract_tags(html):
             while (html[i] != ">" and html[i] != " ") and i <= len(html):
                 tag += html[i]
                 i += 1
-            tags.append(tag)
+            tags.append("<"+tag+">")
     return tags
