@@ -1,7 +1,5 @@
 #!/bin/python3
 
-from pythonds.basic import Stack
-
 def validate_html(html):
     '''
     This function performs a limited version of html validation by checking whether every opening tag has a corresponding closing tag.
@@ -11,24 +9,36 @@ def validate_html(html):
     >>> validate_html('<strong>example')
     False
     '''
-    tags  = _extract_tags(html)
+    #tags  = _extract_tags(html)
     #print(tags)
+
+    tags = []
+
+    for i in range(len(html)):
+        if html[i] == "<":
+            tag = ""
+            i += 1
+            while (html[i] != ">" and html[i] != " ") and i <= len(html):
+                tag += html[i]
+                i += 1
+            tags.append(tag)
+
     valid_html = []
-    s = Stack()
+    s = []
     for tag in tags:
         if tag[0] != "/":
             if tag not in valid_html:
                 valid_html.append(tag)
-            s.push(tag)
+            s.append(tag)
         else: 
-            if s.isEmpty():
+            if s == []:
                 return
             last_tag = s.pop()
             if ("/" + last_tag) == tag:
                 continue
             else:
                 return
-    if s.isEmpty():
+    if s==[]:
         return True
     else:
         return False
@@ -60,5 +70,5 @@ def _extract_tags(html):
             while (html[i] != ">" and html[i] != " ") and i <= len(html):
                 tag += html[i]
                 i += 1
-            tags.append(tag)
+            tags.append("<"+tag+">")
     return tags
