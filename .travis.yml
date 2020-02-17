@@ -4,6 +4,7 @@ python:
 cache: pip
 install:
   - pip3 install -r requirements.txt
+  - pip3 install pythonds
 script:
   - python3 -m pytest -v tests/test_main.py 
 # uncomment the following line for extra credit:
